@@ -23,7 +23,7 @@ public final class Constants {
 
     public static final class OuttakeConstants {
         //Outtake motor ID
-        public static final int OUTTAKE_MOTOR_ID = 9; //9 is a placeholder; fix later
+        public static final int OUTTAKE_MOTOR_ID = 34;
 
         //Outtake characteristics
         public static final double OUTTAKE_EJECT_VELOCITY = 0.5;
@@ -47,10 +47,10 @@ public final class Constants {
         public static final int RIGHT_BACK_CANCODER_ID = 14;
 
         //Drivetrain characteristics
-        public static final double LEFT_FRONT_OFFSET = -0.080;
-        public static final double RIGHT_FRONT_OFFSET = -0.221;
-        public static final double LEFT_BACK_OFFSET = 0.280;
-        public static final double RIGHT_BACK_OFFSET = 0.237;
+        public static final double LEFT_FRONT_OFFSET = -0.080; // from -0.080
+        public static final double RIGHT_FRONT_OFFSET = -0.221; // from -0.221
+        public static final double LEFT_BACK_OFFSET = 0.280; // from 0.280
+        public static final double RIGHT_BACK_OFFSET = 0.237; // from 0.237
 
         public static final double WHEEL_DIAMETER = Units.inchesToMeters(3);
         public static final double DRIVE_MOTOR_GEAR_RATIO = 5.25;
