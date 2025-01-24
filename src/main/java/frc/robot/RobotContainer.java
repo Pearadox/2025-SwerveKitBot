@@ -40,7 +40,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
     drivetrain.setDefaultCommand(new SwerveDrive(drivetrain));
-    outtake.setDefaultCommand(new ControlOuttake(() -> 0, () -> 0, outtake));
   }
 
   /**
@@ -52,6 +51,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     resetHeading_B.onTrue(new InstantCommand(drivetrain::zeroHeading, drivetrain));
     runOuttake_A.onTrue(new ControlOuttake(() -> OuttakeConstants.OUTTAKE_EJECT_VELOCITY, () -> 0, outtake));
+    runOuttake_A.onFalse(new ControlOuttake(() -> 0, () -> 0, outtake));
   }
 
   /**
