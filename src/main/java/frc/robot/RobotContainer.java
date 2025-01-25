@@ -6,11 +6,16 @@ package frc.robot;
 
 import java.io.IOException;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ControlOuttake;
 import frc.robot.commands.SwerveDrive;
@@ -35,11 +40,18 @@ public class RobotContainer {
   private final JoystickButton resetHeading_B = new JoystickButton(controller, XboxController.Button.kB.value);
   private final JoystickButton runOuttake_A = new JoystickButton(controller, XboxController.Button.kA.value);
 
+  //Auton Thingy
+  private final SendableChooser<Command> autoChooser;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    registerNamedCommands();
     drivetrain.setDefaultCommand(new SwerveDrive(drivetrain));
+
+    autoChooser = AutoBuilder.buildAutoChooser("Blue Right");
+    SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   /**
@@ -54,6 +66,8 @@ public class RobotContainer {
     runOuttake_A.onFalse(new ControlOuttake(() -> 0, () -> 0, outtake));
   }
 
+
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -62,6 +76,13 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand(){
-    return new WaitCommand(0);
+    return autoChooser.getSelected();
+  }
+
+  public void registerNamedCommands() {
+    NamedCommands.registerCommand(
+      "Start Outtake", new ControlOuttake(() -> OuttakeConstants.OUTTAKE_EJECT_VELOCITY, () -> 0, outtake).withTimeout(1.0));
+    NamedCommands.registerCommand(
+      "Stop Outtake", new ControlOuttake(() -> 0, () -> 0, outtake));
   }
 }

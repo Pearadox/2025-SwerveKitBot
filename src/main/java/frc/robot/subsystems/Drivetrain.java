@@ -16,10 +16,15 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.SwerveConstants;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 public class Drivetrain extends SubsystemBase {
   private SwerveModule leftFront = new SwerveModule(
@@ -85,6 +90,18 @@ public class Drivetrain extends SubsystemBase {
       }
       catch(Exception e){}
     }).start();
+
+    AutoBuilder.configure(
+      this::getPose,
+      this::resetPose,
+      this::getRobotRelativeSpeeds,
+      this::driveRobotRelative,
+      new PPHolonomicDriveController(
+        new PIDConstants(5.0, 0.0, 0.0),
+        new PIDConstants(5.0, 0.0, 0.0)),
+      SwerveConstants.AUTON_CONFIG,
+      () -> isRedAlliance(),
+      this);
   }
 
   @Override
@@ -132,6 +149,25 @@ public class Drivetrain extends SubsystemBase {
   
   public Pose2d getPose(){
     return poseEstimator.getEstimatedPosition();
+  }
+
+  public void resetPose(Pose2d pose) {
+    try {
+      poseEstimator.resetPosition(getHeadingRotation2d(), getModulePositions(), pose);
+    } catch (Exception e) {
+      poseEstimator.resetPosition(getHeadingRotation2d(), getModulePositions(), Pose2d.kZero);
+      e.printStackTrace();
+
+    }
+  }
+
+  public ChassisSpeeds getRobotRelativeSpeeds(){
+    return SwerveConstants.DRIVE_KINEMATICS.toChassisSpeeds(getModuleStates());
+  }
+
+  public void driveRobotRelative(ChassisSpeeds chassisSpeeds){
+    SwerveModuleState[] moduleStates = SwerveConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    setModuleStates(moduleStates);
   }
 
   public void resetOdometry(Pose2d pose){
@@ -198,5 +234,22 @@ public class Drivetrain extends SubsystemBase {
     positions[2] = leftBack.getPosition();
     positions[3] = rightBack.getPosition();
     return positions;
+  }
+
+  public SwerveModuleState[] getModuleStates(){
+    SwerveModuleState[] states = new SwerveModuleState[4];
+    states[0] = leftFront.getState();
+    states[1] = rightFront.getState();
+    states[2] = leftBack.getState();
+    states[3] = rightBack.getState();
+    return states;
+  } 
+
+  public boolean isRedAlliance(){
+    var alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+        return alliance.get() == DriverStation.Alliance.Red;
+    }
+    return false;
   }
 }

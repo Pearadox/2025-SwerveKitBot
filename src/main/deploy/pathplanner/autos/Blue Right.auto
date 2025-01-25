@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path Blue Right R1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Outtake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Outtake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path Blue Right AS"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 3.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path Blue Right R2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Outtake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Stop Outtake"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

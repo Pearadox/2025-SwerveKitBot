@@ -6,8 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.config.ModuleConfig;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -64,6 +67,9 @@ public final class Constants {
         public static final double DRIVETRAIN_MAX_SPEED = 5.266;
         public static final double DRIVETRAIN_MAX_ANGULAR_SPEED = 3.6 * Math.PI;
 
+        public static final double ROBOT_MASS = 40.82;
+        public static final double ROBOT_MOI = 6.833;
+
         //Teleop constraints
         public static final double TELE_DRIVE_MAX_SPEED = DRIVETRAIN_MAX_SPEED / 1;
         public static final double TELE_DRIVE_MAX_ANGULAR_SPEED = DRIVETRAIN_MAX_ANGULAR_SPEED / 1.5;
@@ -84,14 +90,31 @@ public final class Constants {
                 AUTO_DRIVE_MAX_ANGULAR_SPEED,
                 AUTO_DRIVE_MAX_ANGULAR_ACCELERATION);
 
+    
         //Swerve Kinematics
         public static final double TRACK_WIDTH = Units.inchesToMeters(18.0);
         public static final double WHEEL_BASE = Units.inchesToMeters(17.0);
-        public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
+
+        public static final Translation2d[] MODULE_TRANSLATIONS = {
             new Translation2d(WHEEL_BASE / 2, TRACK_WIDTH / 2),
             new Translation2d(WHEEL_BASE / 2, -TRACK_WIDTH / 2),
             new Translation2d(-WHEEL_BASE / 2, TRACK_WIDTH / 2),
             new Translation2d(-WHEEL_BASE / 2, -TRACK_WIDTH / 2)
-        );
+        };
+
+        public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(MODULE_TRANSLATIONS);
+
+        //Auton Config
+        public static final RobotConfig AUTON_CONFIG = new RobotConfig(
+            ROBOT_MASS,
+            ROBOT_MOI,
+            new ModuleConfig(
+                WHEEL_DIAMETER / 2,
+                DRIVETRAIN_MAX_SPEED,
+                1.0,
+                DCMotor.getFalcon500(1).withReduction(DRIVE_MOTOR_GEAR_RATIO),
+                30.0,
+                1),
+            MODULE_TRANSLATIONS);
     }
 }
