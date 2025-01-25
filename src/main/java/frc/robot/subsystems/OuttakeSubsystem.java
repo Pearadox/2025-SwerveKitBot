@@ -23,6 +23,10 @@ public class OuttakeSubsystem extends SubsystemBase {
         outtakeMotor.set(forward - reverse);
     }
 
+    public void stopMotor() {
+        outtakeMotor.stopMotor();
+    }
+
     @Override
     public void periodic() {
     }

@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -80,9 +79,10 @@ public class RobotContainer {
   }
 
   public void registerNamedCommands() {
-    NamedCommands.registerCommand(
-      "Start Outtake", new ControlOuttake(() -> OuttakeConstants.OUTTAKE_EJECT_VELOCITY, () -> 0, outtake).withTimeout(1.0));
-    NamedCommands.registerCommand(
-      "Stop Outtake", new ControlOuttake(() -> 0, () -> 0, outtake));
+    // NamedCommands.registerCommand(
+    //   "Start Outtake", new ControlOuttake(() -> OuttakeConstants.OUTTAKE_EJECT_VELOCITY, () -> 0, outtake).withTimeout(1.0));
+    NamedCommands.registerCommand("Start Outtake", new ControlOuttake(() -> 0.5, () -> 0, outtake).withTimeout(1.5));
+    //  .andThen(new ControlOuttake(() -> 0, () -> 0, outtake)));
+    NamedCommands.registerCommand("Stop Drivetrain", new InstantCommand(() -> drivetrain.stopModules()));
   }
 }

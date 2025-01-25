@@ -17,12 +17,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Stop Outtake"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "Path Blue Right AS"
@@ -31,7 +25,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 2.0
           }
         },
         {
@@ -44,12 +38,6 @@
           "type": "named",
           "data": {
             "name": "Start Outtake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Stop Outtake"
           }
         }
       ]

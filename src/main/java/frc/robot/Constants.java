@@ -111,7 +111,7 @@ public final class Constants {
             new ModuleConfig(
                 WHEEL_DIAMETER / 2,
                 DRIVETRAIN_MAX_SPEED,
-                1.0,
+                1.25,
                 DCMotor.getFalcon500(1).withReduction(DRIVE_MOTOR_GEAR_RATIO),
                 30.0,
                 1),
