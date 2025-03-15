@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Path Blue Right R1"
+            "pathName": "Path Red Barge R1"
           }
         },
         {
@@ -19,19 +19,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Path Blue Right AS"
+            "pathName": "Path Red Barge AS"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 2.0
+            "waitTime": 1.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Path Blue Right R2"
+            "pathName": "Path Red Barge R2"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Outtake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path Red Barge AS Return"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path Red Barge R3"
           }
         },
         {

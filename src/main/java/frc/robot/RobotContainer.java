@@ -49,7 +49,7 @@ public class RobotContainer {
     registerNamedCommands();
     drivetrain.setDefaultCommand(new SwerveDrive(drivetrain));
 
-    autoChooser = AutoBuilder.buildAutoChooser("Blue Right");
+    autoChooser = AutoBuilder.buildAutoChooser("Red Barge");
     SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
