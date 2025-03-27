@@ -27,6 +27,18 @@
           "data": {
             "waitTime": 1.5
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Path Blue Barge AS Return"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Start Outtake"
+          }
         }
       ]
     }

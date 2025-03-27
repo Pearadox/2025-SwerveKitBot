@@ -29,7 +29,7 @@ public final class Constants {
         public static final int OUTTAKE_MOTOR_ID = 34;
 
         //Outtake characteristics
-        public static final double OUTTAKE_EJECT_VELOCITY = 0.5;
+        public static final double OUTTAKE_EJECT_VELOCITY = 0.35;
     }
 
     public static final class SwerveConstants{
