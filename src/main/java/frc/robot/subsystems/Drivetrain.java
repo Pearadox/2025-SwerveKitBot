@@ -14,6 +14,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -21,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.SwerveConstants;
+import frc.robot.Constants.VisionConstants;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
@@ -68,6 +71,8 @@ public class Drivetrain extends SubsystemBase {
   private SlewRateLimiter turnLimiter = new SlewRateLimiter(SwerveConstants.TELE_DRIVE_MAX_ANGULAR_ACCELERATION);
 
   private ADIS16470_IMU gyro = new ADIS16470_IMU();
+
+  private static final NetworkTable shooterllTable = NetworkTableInstance.getDefault().getTable(VisionConstants.LL_NAME);
 
   private SwerveDrivePoseEstimator poseEstimator = new SwerveDrivePoseEstimator(
     SwerveConstants.DRIVE_KINEMATICS, 
@@ -212,6 +217,10 @@ public class Drivetrain extends SubsystemBase {
     return Rotation2d.fromDegrees(getHeading());
   }
 
+  public double getAngularSpeed() {
+    return gyro.getRate();
+  }
+
   public void stopModules(){
     leftFront.stop();
     leftBack.stop();
@@ -251,5 +260,19 @@ public class Drivetrain extends SubsystemBase {
         return alliance.get() == DriverStation.Alliance.Red;
     }
     return false;
+  }
+
+  public void setRobotOrientation(String limelightName, double yaw, double yawRate, 
+    double pitch, double pitchRate, double roll, double rollRate) {
+
+      double[] entries = new double[6];
+      entries[0] = yaw;
+      entries[1] = yawRate;
+      entries[2] = pitch;
+      entries[3] = pitchRate;
+      entries[4] = roll;
+      entries[5] = rollRate;
+
+      shooterllTable.getEntry("robot_orientation_set").setDoubleArray(entries);
   }
 }

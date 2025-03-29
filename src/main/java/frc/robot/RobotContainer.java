@@ -9,6 +9,8 @@ import java.io.IOException;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -39,6 +41,8 @@ public class RobotContainer {
   private final JoystickButton resetHeading_B = new JoystickButton(controller, XboxController.Button.kB.value);
   private final JoystickButton runOuttake_A = new JoystickButton(controller, XboxController.Button.kA.value);
 
+  public static AprilTagFieldLayout aprilTagFieldLayout;
+
   //Auton Thingy
   private final SendableChooser<Command> autoChooser;
 
@@ -51,6 +55,8 @@ public class RobotContainer {
 
     autoChooser = AutoBuilder.buildAutoChooser("Red Barge");
     SmartDashboard.putData("Auto Chooser", autoChooser);
+
+    aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
   }
 
   /**

@@ -4,11 +4,14 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.math.Vector;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.config.ModuleConfig;
 
@@ -50,10 +53,10 @@ public final class Constants {
         public static final int RIGHT_BACK_CANCODER_ID = 14;
 
         //Drivetrain characteristics
-        public static final double LEFT_FRONT_OFFSET = -0.3768;
-        public static final double RIGHT_FRONT_OFFSET = -0.1443;
-        public static final double LEFT_BACK_OFFSET = 0.2815;
-        public static final double RIGHT_BACK_OFFSET = 0.2331;
+        public static final double LEFT_FRONT_OFFSET = -0.067627; // from -0.067627
+        public static final double RIGHT_FRONT_OFFSET = 0.279541; // from 0.279541
+        public static final double LEFT_BACK_OFFSET = 0.278076; // from 0.278076
+        public static final double RIGHT_BACK_OFFSET = 0.229492; // from 0.229492
 
         public static final double WHEEL_DIAMETER = Units.inchesToMeters(3);
         public static final double DRIVE_MOTOR_GEAR_RATIO = 5.25;
@@ -69,6 +72,8 @@ public final class Constants {
 
         public static final double ROBOT_MASS = 44.22;
         public static final double ROBOT_MOI = 6.833;
+
+        public static final Vector<N3> ODOMETRY_STD_DEV = VecBuilder.fill(0.1, 0.1, 0.1);
 
         //Teleop constraints
         public static final double TELE_DRIVE_MAX_SPEED = DRIVETRAIN_MAX_SPEED / 1;
@@ -116,5 +121,16 @@ public final class Constants {
                 30.0,
                 1),
             MODULE_TRANSLATIONS);
+    }
+
+    public static final class VisionConstants {
+        public static final String LL_NAME = "limelight-0";
+
+        public static final Vector<N3> LIMELIGHT_STD_DEV = VecBuilder.fill(.7, .7, .9999999);
+        public static final Vector<N3> MEGATAG2_LIMELIGHT_STD_DEV = VecBuilder.fill(.7, .7, .9999999);
+
+    
+        public static final double AMBIGUITY_FILTER = 0.3;
+        public static final double DISTANCE_FILTER = FIELD_LENGTH_METERS / 2;
     }
 }
